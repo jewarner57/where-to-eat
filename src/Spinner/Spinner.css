@@ -1,0 +1,36 @@
+.Spinner {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin-top: -20px;
+}
+
+.spin-button {
+  position: absolute;
+  box-sizing: border-box;
+  top: calc(50% - 40px);
+  left: calc(50% - 40px);
+  height: 80px;
+  width: 80px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 20;
+}
+
+.spin-button:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+@keyframes wheelSpinFade {
+  0% {
+    background-color: white;
+  }
+
+  50% {
+    background-color: lightgray;
+  }
+  100% {
+    background-color: white;
+  }
+}

@@ -1,0 +1,11 @@
+.slice {
+  width: 500px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 500px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
