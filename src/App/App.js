@@ -32,8 +32,35 @@ function App() {
     // fetch the google maps places data
     const places = ['Subway', 'Fosters Freeze', 'McDonalds', 'Panera Bread', 'Happy Hound Diner', 'Jack in the Box', 'Starbucks'];
     
-    // setLabels(places);
-    // saveToLocalStorage(LOCAL_STORAGE_KEY, places)
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${process.env.REACT_APP_YELP_API_KEY}`
+      }
+    };
+
+    const params = {
+      term: 'restaurant',
+      location: 'Los Gatos',
+      radius: 5000,
+      limit: 20,
+    };
+
+    const url = new URL('https://corsproxy.io/?https://api.yelp.com/v3/businesses/search?');
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+    fetch(url, options)
+      .then(response => response.json())
+      .then(response => {
+        const places = response?.businesses || []
+        const labels = places.map((place) => {
+          return place?.name
+        })
+        setLabels(labels);
+        saveToLocalStorage(LOCAL_STORAGE_KEY, labels)
+      })
+      .catch(err => console.error(err));
   }, [])
 
 

@@ -8,10 +8,10 @@
 .spin-button {
   position: absolute;
   box-sizing: border-box;
-  top: calc(50% - 40px);
-  left: calc(50% - 40px);
-  height: 80px;
-  width: 80px;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  height: 100px;
+  width: 100px;
   cursor: pointer;
   background-color: white;
   border-radius: 50%;
