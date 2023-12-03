@@ -5,4 +5,5 @@
   align-items: center;
   background-color: rgb(57, 56, 62);
   min-height: 100vh;
+  min-width: 100vw;
 }

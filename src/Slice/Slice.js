@@ -8,11 +8,11 @@ function Slice(props) {
   const sliceEnd = 25 + sliceWidth / 2;
 
   const sliceRotation = 360 / totalSlices * (sliceNumber - 1)
-  const color = `hsl(${360 / (sliceNumber + 1)}, 70%, 50%)`;
+  const color = `hsl(${360 / totalSlices * sliceNumber}, 70%, 50%)`;
 
   return (
     <div className="slice" style={{
-      transform: `rotate(${sliceRotation}deg)`,
+      transform: `rotate(${sliceRotation - 90 + (360 / totalSlices) * 1.5 }deg)`,
       background: `conic-gradient(
         transparent 0% ${sliceStart}%,
         ${color} ${sliceStart}% ${sliceEnd}%,

@@ -8,17 +8,18 @@ function App() {
   const LOCAL_STORAGE_KEY = 'nearby-place-names-for-spinner'
   const [labels, setLabels] = useState(['Loading'])
   const [rotation, setRotation] = useState(0)
-  const location = '';
+  const [sliceCount, setSliceCount] = useState(20);
   const spinWheel = () => {
     const newRotation = rotation + Math.random() * 3000 + 1000
     setRotation(newRotation);
     
-    const spin = ''
-    const winner = ''
-    const sliceSize = 360 / 7;
-    const contender = (newRotation % 360) / sliceSize
-    console.log(Math.floor(contender))
-    console.log(labels[Math.floor(contender)])
+    const sliceSize = 360 / sliceCount;
+    console.log(sliceSize)
+    const contender = ((newRotation*-1) % 360) / sliceSize
+    console.log(Math.floor(Math.abs(contender)))
+    console.log(labels[Math.floor(Math.abs(contender))])
+
+    // rotation / sliceSize
   }
 
   useEffect(() => {
@@ -27,11 +28,6 @@ function App() {
       return
     }
 
-    console.log('duplicate call test')
-
-    // fetch the google maps places data
-    const places = ['Subway', 'Fosters Freeze', 'McDonalds', 'Panera Bread', 'Happy Hound Diner', 'Jack in the Box', 'Starbucks'];
-    
     const options = {
       method: 'GET',
       headers: {
@@ -47,6 +43,7 @@ function App() {
       limit: 20,
     };
 
+    // fetch nearby restaurants from yelp api
     const url = new URL('https://corsproxy.io/?https://api.yelp.com/v3/businesses/search?');
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
@@ -67,7 +64,7 @@ function App() {
   return (
     <div className="App">
       <IconDown />
-      <Spinner rotation={rotation} spinWheel={spinWheel} labels={labels} ></Spinner>
+      <Spinner rotation={rotation * -1} spinWheel={spinWheel} labels={labels} ></Spinner>
     </div>
   );
 }
