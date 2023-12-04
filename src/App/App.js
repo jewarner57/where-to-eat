@@ -3,18 +3,20 @@ import WindowContainer from '../WindowContainer/WindowContainer';
 import SpinnerContainer from '../SpinnerContainer/SpinnerContainer'
 import './App.css';
 import SettingsContainer from '../SettingsContainer/SettingsContainer';
+import { loadFromLocalStorage, LOCAL_STORAGE_KEY } from '../utils';
 
 function App() {
-  const [searchParams, setSearchParams] = useState({});
+  const previousSettings = loadFromLocalStorage(LOCAL_STORAGE_KEY)?.params;
+  const [searchParams, setSearchParams] = useState(previousSettings);
 
   return (
     <div className="App">
       <div className="AppPanels">
-        <WindowContainer title={'Where to eat?'} windowContent={<SpinnerContainer settingsParams={searchParams} />} />
+        <WindowContainer title={'Where to eat?'} windowContent={<SpinnerContainer settingsParams={searchParams} setSettingsParams={setSearchParams} />} />
         <WindowContainer 
           title={'Settings'} 
           windowContent={
-            <SettingsContainer setSearchParams={setSearchParams} />
+            <SettingsContainer setSearchParams={setSearchParams} searchParams={searchParams} />
           } />
       </div>
     </div>

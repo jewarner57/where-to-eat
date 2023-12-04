@@ -4,7 +4,7 @@ import './SpinnerContainer.css';
 import IconDown from '../IconDown/IconDown';
 import { saveToLocalStorage, loadFromLocalStorage, LOCAL_STORAGE_KEY } from '../utils';
 
-function SpinnerContainer({ settingsParams }) {
+function SpinnerContainer({ settingsParams, setSettingsParams }) {
   const [labels, setLabels] = useState([])
   const [loading, setLoading] = useState(false)
   const [rotation, setRotation] = useState(0)
@@ -20,29 +20,30 @@ function SpinnerContainer({ settingsParams }) {
     setWinner(labels[Math.floor(Math.abs(contender))])
   }
 
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${process.env.REACT_APP_YELP_API_KEY}`
+    }
+  };
+
+  const params = {
+    term: 'restaurant',
+    location: 'Los Gatos',
+    radius: 5000,
+    limit: 20,
+    ...settingsParams
+  };
+
   useEffect(() => {
     setLoading(true);
     if (loadFromLocalStorage(LOCAL_STORAGE_KEY)) {
-      setLabels(loadFromLocalStorage(LOCAL_STORAGE_KEY).split(','));
+      const previousSettings = loadFromLocalStorage(LOCAL_STORAGE_KEY);
+      setLabels(previousSettings?.labels);
       setLoading(false);
       return
     }
-
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${process.env.REACT_APP_YELP_API_KEY}`
-      }
-    };
-
-    const params = {
-      term: 'restaurant',
-      location: 'Los Gatos',
-      radius: 5000,
-      limit: 20,
-      ...settingsParams
-    };
 
     // fetch nearby restaurants from yelp api
     const url = new URL('https://corsproxy.io/?https://api.yelp.com/v3/businesses/search?');
@@ -56,7 +57,7 @@ function SpinnerContainer({ settingsParams }) {
           return place?.name
         })
         setLabels(labels);
-        saveToLocalStorage(LOCAL_STORAGE_KEY, labels);
+        saveToLocalStorage(LOCAL_STORAGE_KEY, { labels: labels, params: params });
         setLoading(false);
       })
       .catch(err => {

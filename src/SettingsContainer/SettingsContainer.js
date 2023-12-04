@@ -3,12 +3,11 @@ import { LOCAL_STORAGE_KEY } from '../utils';
 import './SettingsContainer.css';
 import IconReload from '../IconReload/IconReload';
 
-function SettingsContainer({ setSearchParams }) {
-  const [location, setLocation] = useState('New York City')
-  const [searchRadius, setSearchRadius] = useState(5000)
-  const [pieSliceCount, setPieSliceCount] = useState(20)
-  
-  const [priceMax, setPriceMax] = useState(4)
+function SettingsContainer({ setSearchParams, searchParams }) {
+  const [location, setLocation] = useState(searchParams?.location || "New York City")
+  const [searchRadius, setSearchRadius] = useState(searchParams?.radius || "2000")
+  const [pieSliceCount, setPieSliceCount] = useState(searchParams?.limit || "10")
+  const [priceMax, setPriceMax] = useState(searchParams?.price ? searchParams?.price.split(',').length : 4);
 
   const updateParams = (e, params) => {
     e.preventDefault()
@@ -42,8 +41,8 @@ function SettingsContainer({ setSearchParams }) {
           <input type="text" value={location} onChange={(e) => { setLocation(e.target.value) }} />
         </label>
         <label>
-          Search Radius:
-          <input type="number" value={searchRadius} onChange={(e) => { setSearchRadius(e.target.value) }} />
+          Search Radius (Meters):
+          <input type="number" value={searchRadius} onChange={(e) => { setSearchRadius(e.target.value) }} max="40000" />
         </label>
         <label>
           Pie Slice Count:
