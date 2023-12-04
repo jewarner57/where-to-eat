@@ -1,13 +1,21 @@
+import { useState } from 'react';
+import WindowContainer from '../WindowContainer/WindowContainer';
+import SpinnerContainer from '../SpinnerContainer/SpinnerContainer'
 import './App.css';
-import SpinnerContainer from '../SpinnerContainer/SpinnerContainer';
-import MenuBar from '../MenuBar/MenuBar';
+import SettingsContainer from '../SettingsContainer/SettingsContainer';
 
 function App() {
+  const [searchParams, setSearchParams] = useState({});
+
   return (
     <div className="App">
-      <div>
-        <MenuBar /> 
-        <SpinnerContainer />
+      <div className="AppPanels">
+        <WindowContainer title={'Where to eat?'} windowContent={<SpinnerContainer settingsParams={searchParams} />} />
+        <WindowContainer 
+          title={'Settings'} 
+          windowContent={
+            <SettingsContainer setSearchParams={setSearchParams} />
+          } />
       </div>
     </div>
   );
@@ -17,5 +25,6 @@ export default App;
 
 
 // TODO
+// show a smaller window to the right with the settings and another one to the left with the current winner
 // Show a popup of the winning restaurant's details
-// Allow user to control, location, cost, max-locations, radius
+

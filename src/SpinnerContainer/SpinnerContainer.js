@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import Spinner from '../Spinner/Spinner';
 import './SpinnerContainer.css';
 import IconDown from '../IconDown/IconDown';
-import { saveToLocalStorage, loadFromLocalStorage } from '../utils';
-import IconSettings from '../IconSettings/IconSettings';
+import { saveToLocalStorage, loadFromLocalStorage, LOCAL_STORAGE_KEY } from '../utils';
 
-function SpinnerContainer() {
-  const LOCAL_STORAGE_KEY = 'nearby-place-names-for-spinner'
+function SpinnerContainer({ settingsParams }) {
   const [labels, setLabels] = useState([])
   const [loading, setLoading] = useState(false)
   const [rotation, setRotation] = useState(0)
@@ -43,6 +41,7 @@ function SpinnerContainer() {
       location: 'Los Gatos',
       radius: 5000,
       limit: 20,
+      ...settingsParams
     };
 
     // fetch nearby restaurants from yelp api
@@ -65,7 +64,7 @@ function SpinnerContainer() {
         setError(`Error: ${err.message}`)
         console.error(err)
       });
-  }, [])
+  }, [settingsParams])
 
 
   return (

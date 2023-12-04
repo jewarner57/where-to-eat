@@ -8,7 +8,7 @@ function Spinner({ rotation, spinWheel, labels, loading }) {
   return (
     <div className="Spinner" 
       style={{ 
-        transition: 'all 4s cubic-bezier(0.20, 0.1, 0.20, 1)', 
+        transition: 'all 8s cubic-bezier(0.10, 1, 0.10, 1)', 
         transform: `rotate(${rotation}deg)`,
         animation: loading ? `loadingSpin 4s linear infinite` : 'none',
       }}

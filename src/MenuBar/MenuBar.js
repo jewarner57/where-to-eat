@@ -1,12 +1,11 @@
 import './MenuBar.css';
-import IconSettings from '../IconSettings/IconSettings';
 
-function MenuBar() {
+function MenuBar({children, title}) {
   return (
     <div className='menuBar'>
-      <p>Where to eat?</p>
+      <p>{title}</p>
       <div style={{ cursor: 'pointer' }} onClick={() => { }} >
-        <IconSettings />
+        {children}
       </div>
     </div>
   );
